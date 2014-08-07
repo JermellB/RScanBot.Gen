@@ -27,7 +27,7 @@ Notes:
   
   Only tested the email script with google SMTP servers.
   
-  
+ ::: 
   
 Alternative to using the GUI is to first set the settings with the desired fields.
 
