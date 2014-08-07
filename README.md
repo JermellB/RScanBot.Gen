@@ -15,7 +15,7 @@ Run and forget kind of thing, emails you only the url's for comments and submiss
 
 Gui for windows, buggy as hell used currently for configuring data persistence, alternate to this is described below.
 
-#todo examples
+:::todo examples
 
 
 -> Run bot by command line for now. "python Main.py"
