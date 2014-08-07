@@ -37,5 +37,7 @@ cd to RScanBot.Gen file
 
 python MainNoGui.py
 
+Check HOWTO.txt for more info.
+
 
 
