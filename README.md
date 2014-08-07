@@ -27,10 +27,15 @@ Notes:
   
   Only tested the email script with google SMTP servers.
   
+ ::: 
   
 Alternative to using the GUI is to first set the settings with the desired fields.
 
-go to the if name == main block and uncomment the commented lines except for the print dir(frame)
+look at the settingsExample.py folder for a template.
 
-Comment the currently uncommented lines there. 
+cd to RScanBot.Gen file
+
+python MainNoGui.py
+
+
 
