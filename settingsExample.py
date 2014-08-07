@@ -20,7 +20,7 @@ class Settings(object):
         self.userAgent = "Comment scanning bot created by /u/swedishbotmafia used by /u/%s v1" % self.username
         self.postLimit = 100
         self.submissionIdList = None
-        self.subredditList = ["all","worldnews","python","worldnews","news"]
+        self.subredditList = ["all","worldnews","python","news"]
         self.botName = "Rbot scanner"
         self.wordList = ["netflix ","comcast ","verizon ","israel ","net neutrality "]
         self.timeToWait = 600
