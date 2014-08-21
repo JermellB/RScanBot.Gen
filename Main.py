@@ -12,27 +12,74 @@ from datetime import datetime
 import settings
 from urllib2 import HTTPError
 import emailer
-import botGui
-import wx
 import multiprocessing
 try:
     import cPickle as pickle
 except:
     import pickle
+import kivyGui
 
-# Implementing BotFrame
-class MyBotFrame( botGui.BotFrame ):
-    def __init__( self, parent ):
-        botGui.BotFrame.__init__( self, parent ) 
-        self.botThread = None
+class RedditUpdateBotV1App(kivyGui.RedditUpdateBotV1App):
 
-        #tryToLoadPickle
-        #else pass
-        #except e sys_exec.info()
-        #finally Run this code
+    def updateSettingsEventHandler(self, instance):
+        settings = self.settings
+        settings.wordList = []
+        settings.username = self.rUsernameInput.text
+        settings.password = self.rPasswordInput.text
+        settings.from_addr = self.eUsernameInput.text
+        settings.login = self.eUsernameInput.text
+        settings.emailPassword = self.ePasswordInput.text
+        settings.smtpserver = self.eServerAddressInput.text
+
+        settings.to_addr_list = self.eToEmailAddressInput.text.split(',')
+
+        settings.subredditList = self.subredditInput.text.split(',')
+
+        wordList = self.wordsInput.text.split(',')
+
+        for word in wordList:
+            settings.wordList.append(word + ' ')
+
+        print settings.wordList
+        print settings.to_addr_list
+
+        settings.postLimit = self.numberOfPostsInput.text
+        settings.timeToWait = self.minutesToWaitInput.text
+        settings.postLimit = int(self.settings.postLimit)
+        settings.timeToWait = int(self.settings.timeToWait)*60
+
+        settingsObject = self.settings
+        settingsObject_open = open(self.pickleFile,'w')
+        settings = pickle.dump(settingsObject,settingsObject_open)
+
+    def startButtonEventHandler(self, instance):
+        self.aBot = Bot()
+        #set bot params
+        self.aBot.username = self.settings.username
+        self.aBot.password = self.settings.password
+        self.aBot.postLimit = self.settings.postLimit
+        self.aBot.subredditList = self.settings.subredditList
+        self.aBot.wordList = self.settings.wordList
+        self.aBot.login = self.settings.login
+        self.aBot.emailPassword = self.settings.emailPassword
+        self.aBot.to_addr_list = self.settings.to_addr_list
+        
+        #Todo: Bot objects class and, add process to a list that will hold new bot Objects. 
+        self.botThread = multiprocessing.Process(target=self.aBot.main)
+    
+        self.botThread.start()
+        print self.botThread.pid
+        print "Thread started"
+
+    def stopButtonEventHandler(self, instance):
+        self.botThread.terminate()
+        print 'TERMINATED', self.botThread, self.botThread.is_alive()
+        self.botThread.join()
+        print self.botThread.is_alive()
+
+    def on_start(self):
         self.pickleFile = "settings.obj"
         self.settings = settings.Settings()
-        self.active = False
         
         try:
             settingsObject = open(self.pickleFile,'r')
@@ -51,122 +98,40 @@ class MyBotFrame( botGui.BotFrame ):
             print e
 
         finally:
-            self.RUnameBox.SetValue(self.settings.username)
-            self.RedditPasswordBox.SetValue(self.settings.password)
-            self.EmailUsernameBox.SetValue(self.settings.from_addr)
-            self.EmailPasswordBox.SetValue(self.settings.emailPassword)
-            self.SmtpServerAddressBox.SetValue(self.settings.smtpserver)
+            print self.settings.wordList
+            self.rUsernameInput.text = self.settings.username
+            self.rPasswordInput.text = self.settings.password
+            self.eUsernameInput.text = self.settings.from_addr
+            self.ePasswordInput.text = self.settings.emailPassword
+            self.eServerAddressInput.text = self.settings.smtpserver
             to_addr_list = ','.join(self.settings.to_addr_list)
-            self.ToEmailAddressesBox.SetValue(to_addr_list.strip())
+            self.eToEmailAddressInput.text = to_addr_list.strip()
             subredditList = ','.join(self.settings.subredditList)
-            self.SubredditBox.SetValue(subredditList.strip())
+            self.subredditInput.text = subredditList.strip()
             wordList = ','.join(self.settings.wordList)
-            self.WordBox.SetValue(wordList.replace(" ",""))
-            self.NumberOfPostsBox.SetValue(str(self.settings.postLimit))
-            self.MinutesToWaitBox.SetValue(str(self.settings.timeToWait/60))
-            self.settings.username = self.RUnameBox.GetValue()
-            self.settings.password = self.RedditPasswordBox.GetValue()
-            self.settings.from_addr = self.EmailUsernameBox.GetValue()
-            self.settings.login = self.EmailUsernameBox.GetValue()
-            self.settings.emailPassword = self.EmailPasswordBox.GetValue()
-            self.settings.smtpserver = self.SmtpServerAddressBox.GetValue()
+            self.wordsInput.text = wordList #.replace(" ","")
+            self.numberOfPostsInput.text = str(self.settings.postLimit)
+            self.minutesToWaitInput.text = str(self.settings.timeToWait/60)
+            self.settings.username = self.rUsernameInput.text
+            self.settings.password = self.rPasswordInput.text
+            self.settings.from_addr = self.eUsernameInput.text
+            self.settings.login = self.eUsernameInput.text
+            self.settings.emailPassword = self.ePasswordInput.text
+            self.settings.smtpserver = self.eServerAddressInput.text
             self.settings.db_filename = self.settings.username + ".db"
-            self.settings.to_addr_list = self.ToEmailAddressesBox.GetValue().split(',')
-            self.settings.subredditList = self.SubredditBox.GetValue().split(',')
-            wordList = self.WordBox.GetValue().split(',')
-            
-            for word in wordList:
-                self.settings.wordList.append(word + ' ')
+            self.settings.to_addr_list = self.eToEmailAddressInput.text.split(',')
+            self.settings.subredditList = self.subredditInput.text.split(',')
+            self.settings.wordList = self.wordsInput.text.split(',')
 
-            self.settings.postLimit = int(self.NumberOfPostsBox.GetValue())
-            self.settings.timeToWait = int(self.MinutesToWaitBox.GetValue())*60
+            print self.settings.wordList
 
-    # Handlers for BotFrame events.
-    def m_QuitOptionOnMenuSelection( self, event ):
-        try:
-            self.botThread.terminate()
-        except:
-            pass
-        finally:
-            self.Destroy()
-
-    def m_RunBotOptionOnMenuSelection( self, event ):
-        #TODO: use a 2 state button here and if state equals pressed pass else start thread.
-        self.botThread = multiprocessing.Process(target=self.aBot.main)
-        self.botThread.daemon = False
-        self.botThread.start()
-        print self.botThread.pid
-        print "Thread started"
-
-    def m_AboutOptionOnMenuSelection( self, event ):
-        dlg = wx.MessageDialog(self, "A reddit comment scanning bot built by Jermell Beane \n\n  He can be found at swedishbotmafia@gmail.com \n Made In 2014, All rights reserved, something something lawyerish", "About This Bot", wx.OK)
-        dlg.ShowModal() # Shows it
-        dlg.Destroy() # finally destroy it when finished.
-
-    def update_settings_buttonOnButtonClick( self, event ):
-        # TODO: Implement update_settings_buttonOnButtonClick
-        settings = self.settings
-        settings.wordList = []
-        settings.username = self.RUnameBox.GetValue()
-        settings.password = self.RedditPasswordBox.GetValue()
-        settings.from_addr = self.EmailUsernameBox.GetValue()
-        settings.login = self.EmailUsernameBox.GetValue()
-        settings.emailPassword = self.EmailPasswordBox.GetValue()
-        settings.smtpserver = self.SmtpServerAddressBox.GetValue()
-
-        settings.to_addr_list = self.ToEmailAddressesBox.GetValue().split(',')
-
-        settings.subredditList = self.SubredditBox.GetValue().split(',')
-
-        wordList = self.WordBox.GetValue().split(',')
-        for word in wordList:
-            settings.wordList.append(word + ' ')
-
-        print settings.wordList
-        print settings.to_addr_list
-
-        settings.postLimit = int(self.NumberOfPostsBox.GetValue())
-        settings.timeToWait = int(self.MinutesToWaitBox.GetValue())*60
-
-        settingsObject = self.settings
-        settingsObject_open = open(self.pickleFile,'w')
-        settings = pickle.dump(settingsObject,settingsObject_open)
-
-    def start_bot_buttonOnButtonClick( self, event ):
-        
-        #initialize bot object
-        if self.active:
-            pass
-        
-        else:
-            self.aBot = Bot()
-            #set bot params
-            self.aBot.username = self.settings.username
-            self.aBot.password = self.settings.password
-            self.aBot.postLimit = self.settings.postLimit
-            self.aBot.subredditList = self.settings.subredditList
-            self.aBot.wordList = self.settings.wordList
-            self.aBot.login = self.settings.login
-            self.aBot.emailPassword = self.settings.emailPassword
-            self.aBot.to_addr_list = self.settings.to_addr_list
-            
-            #Todo: Bot objects class and, add process to a list that will hold new bot Objects. 
-            self.botThread = multiprocessing.Process(target=self.aBot.main)
-            self.botThread.daemon = False
-            self.botThread.start()
-            print self.botThread.pid
-            print "Thread started"
-            self.active = True
-
-    
-    def stop_bot_buttonOnButtonClick( self, event ):
-        if self.botThread.is_alive():
-            self.botThread.terminate()
-            print "Terminated:", self.botThread, self.botThread.pid
-            print self.botThread.is_alive()
-            self.active = 0
-        else:
-            print "thread probably wasn't alive"
+            self.settings.postLimit = self.numberOfPostsInput.text
+            self.settings.timeToWait = self.minutesToWaitInput.text
+            self.settings.postLimit = int(self.settings.postLimit)
+            self.settings.timeToWait = int(self.settings.timeToWait)*60
+            print self.settings.timeToWait
+            print type(self.settings.postLimit)
+            print type(self.settings.timeToWait)
 
 class Bot(object):
     '''
@@ -178,23 +143,8 @@ class Bot(object):
         '''
         Constructor
         '''
-        # will have to initialize each of these classes with the proper args
         self.pickleFile = "settings.obj"
-
-        try:
-            settingsObject = open(self.pickleFile,'r')
-            self.settings1 = pickle.load(settingsObject)
-
-        except pickle.UnpicklingError:
-            pass
-
-        except:
-            e = sys.exc_info()
-            print e
-
-        else:
-            self.settings1 = settings.Settings()
-
+        self.settings1 = settings.Settings()
         self.emailer1 = emailer.Email()
         self.db_filename = None
         self.username = self.settings1.username
@@ -229,7 +179,7 @@ class Bot(object):
         '''
         
         try:
-            self.db_filename = self.username + '.db'
+            self.db_filename = self.botName + '.db'
         
             print "\n" + self.db_filename + "\n"
 
@@ -622,22 +572,11 @@ class Bot(object):
             self.iterateEmailList()
             print "waiting %s" % str(self.settings1.timeToWait/60) + " minutes... \n"
             time.sleep(self.settings1.timeToWait)
+            
 
 if __name__ == '__main__':
-
-#   aBot = Bot()
-#   aBot.main()
-    app = wx.App(False)
-    frame = MyBotFrame(None)
-#    print dir(frame)
-    frame.Show()
-    try:
-        app.MainLoop()
-
-    except:
-        e = sys.exc_info()   
-        print e
-        print "\n"
-        frame.botThread.terminate()
+    app = RedditUpdateBotV1App()
+    app.setOrientation(orient="vertical")
+    app.run()
 
 #todo: Check to see if I'm resetting submissionId List when I reload the pickle after updating settings
