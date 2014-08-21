@@ -25,7 +25,6 @@ To run GUI you need Praw and WxPython installed on your computer.
 
 Notes:
 
-  Hover over fields in GUI for example of how the data should be put in.
   
   Only tested the email script with google SMTP servers.
   
@@ -35,11 +34,6 @@ Alternative to using the GUI is to first set the settings with the desired field
 
 look at the settingsExample.py folder for a template.
 
-cd to RScanBot.Gen file
-
-python MainNoGui.py
-
-Check HOWTO.txt for more info.
 
 
 
