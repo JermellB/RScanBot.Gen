@@ -28,7 +28,7 @@
 	for "self.subredditList =" enter each subreddit as indictated by the settingsExample.py you can add more or less, to check the front page use "all"
 	for "self.wordList =" enter the words you would like to track as indicated by the settingsExample.py file, REMEMBER!!! put a space after each word before you close the quotation marks
 
-	for "self.timeToWait =" enter the time you would like to the bot to pause for before running again. it is measured in seconds. 600 seconds = 10 minutes etc.
+	for "self.timeToWait =" enter the time you would like the bot to pause for before running again. it is measured in seconds. 600 seconds = 10 minutes etc.
 	for "self.from_addr =" enter your email address or the one that will be sending the email updates
 	for "self.login =" enter the username for your email in my case I just used Gmail's smtp servers. OTher ones will probably work.
 	for "self.emailPassword =" enter the password for your email address
