@@ -13,8 +13,6 @@ Features:
 
 Run and forget kind of thing, emails you only the url's for comments and submissions that matter to you.
 
-Gui for windows, buggy as hell used currently for configuring data persistence, alternate to this is described below.
-
 To run GUI you need Praw and Kivy installed on your computer.
 
 Todo:Executables for Mac,Linux,Win/potentially android(we'll see)
