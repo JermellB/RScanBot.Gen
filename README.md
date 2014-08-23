@@ -25,6 +25,13 @@ Todo:Executables for Mac,Linux,Win/potentially android(we'll see)
 -> Run bot by command line for now. "python Main.py"
 
 
+you should get the nice shiny GUI if you have everything setup correctly, then from there you can setup the settings
+
+file by filling in the GUI fields and hitting update settings, then select run bot. Watch magic occur.
+
+Stop bot button kills the bot in an effective manner now.
+
+
 Notes:
 
   
