@@ -12,7 +12,7 @@ from datetime import datetime
 import settings
 from urllib2 import HTTPError
 import emailer
-import multiprocessing
+import threading
 try:
     import cPickle as pickle
 except:
@@ -35,13 +35,11 @@ class RedditUpdateBotV1App(kivyGui.RedditUpdateBotV1App):
 
         settings.subredditList = self.subredditInput.text.split(',')
 
-        wordList = self.wordsInput.text.split(',')
-
-        for word in wordList:
-            settings.wordList.append(word + ' ')
+        settings.wordList = self.wordsInput.text.split(',')
 
         print settings.wordList
         print settings.to_addr_list
+        print settings.subredditList
 
         settings.postLimit = self.numberOfPostsInput.text
         settings.timeToWait = self.minutesToWaitInput.text
@@ -65,17 +63,14 @@ class RedditUpdateBotV1App(kivyGui.RedditUpdateBotV1App):
         self.aBot.to_addr_list = self.settings.to_addr_list
         
         #Todo: Bot objects class and, add process to a list that will hold new bot Objects. 
-        self.botThread = multiprocessing.Process(target=self.aBot.main)
-    
+        self.botThread = threading.Thread(name="botThread",target=self.aBot.main)
+        self.botThread.setDaemon(True)
         self.botThread.start()
-        print self.botThread.pid
         print "Thread started"
 
     def stopButtonEventHandler(self, instance):
-        self.botThread.terminate()
-        print 'TERMINATED', self.botThread, self.botThread.is_alive()
-        self.botThread.join()
-        print self.botThread.is_alive()
+        self.aBot = None
+        sys.exit(0)
 
     def on_start(self):
         self.pickleFile = "settings.obj"
@@ -108,8 +103,9 @@ class RedditUpdateBotV1App(kivyGui.RedditUpdateBotV1App):
             self.eToEmailAddressInput.text = to_addr_list.strip()
             subredditList = ','.join(self.settings.subredditList)
             self.subredditInput.text = subredditList.strip()
+            print self.settings.wordList
             wordList = ','.join(self.settings.wordList)
-            self.wordsInput.text = wordList #.replace(" ","")
+            self.wordsInput.text = wordList
             self.numberOfPostsInput.text = str(self.settings.postLimit)
             self.minutesToWaitInput.text = str(self.settings.timeToWait/60)
             self.settings.username = self.rUsernameInput.text
