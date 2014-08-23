@@ -1,3 +1,5 @@
 *.db
 *.obj
 *.pyc
+*.kv
+botGui.py
