@@ -1,3 +1,5 @@
+
+
 1a. Download RBot into your local folder
 
 1b. Install Praw
@@ -34,7 +36,7 @@
 	for "self.emailPassword =" enter the password for your email address
 	for "self.smtpserver =" enter the smtp server address
 
-
+#OLD WILL UPDATE THIS SOON WITH NEW INSTRUCTIONS.
 3. Now to Run the bot.
 	
 	use the command line to navigate to the folder you downloaded RBot to.
