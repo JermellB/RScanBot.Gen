@@ -18,35 +18,13 @@
 
 
 
-2. Configure settings.py
+2. Configure settings:
 	
-	Open settingsExample.py
-	Open settings.py
-	
-	for "self.username =" enter your reddit username between the "s
-	for "self.password =" enter your reddit password between the "s
-	
-	for "self.postLimit =" enter the number of hot posts from each subreddit you want to scan for your words.
-	for "self.subredditList =" enter each subreddit as indictated by the settingsExample.py you can add more or less, to check the front page use "all"
-	for "self.wordList =" enter the words you would like to track as indicated by the settingsExample.py file, REMEMBER!!! put a space after each word before you close the quotation marks
+	Fill in GUI fields as indicated in setup pictures
 
-	for "self.timeToWait =" enter the time you would like the bot to pause for before running again. it is measured in seconds. 600 seconds = 10 minutes etc.
-	for "self.from_addr =" enter your email address or the one that will be sending the email updates
-	for "self.login =" enter the username for your email in my case I just used Gmail's smtp servers. OTher ones will probably work.
-	for "self.emailPassword =" enter the password for your email address
-	for "self.smtpserver =" enter the smtp server address
 
-#OLD WILL UPDATE THIS SOON WITH NEW INSTRUCTIONS.
+
 3. Now to Run the bot.
 	
-	use the command line to navigate to the folder you downloaded RBot to.
-	
-	then do the command:
-		
-		python MainNoGui.py
-	
-
-	Step 3b. 
-		
-		Watch the Magic.	
+		#to be continued.
 	
