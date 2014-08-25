@@ -1,11 +1,2 @@
 #!/bin/sh
-<<<<<<< HEAD
-DIR="$( cd "$( dirname "$0" )" && pwd )"
-DIR
-kivy Main.py
-=======
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-cd $DIR
 exec kivy Main.py
-
->>>>>>> a86cefd9162ac86ae2c9ede05a7824f8b6938576
