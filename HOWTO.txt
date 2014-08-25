@@ -1,17 +1,13 @@
+~~~ Visual Guide Can be found @ imgur.com/a/Uwszx#0 ~~~
 
 
-1. Download RScanBot
-
-	https://github.com/SwedishBotMafia/RScanBot.Gen/archive/master.zip
-
-
-2. Install pip
+1. Install pip
 	
 	from your command line/Terminal do the command:
 
 		sudo easy_install pip
 
-3. Install Praw
+2. Install Praw
 
 	Next you'll have to use pip to install praw (the python wrapper for the reddit API)
 
@@ -25,7 +21,7 @@
 		
 		sudo pip install praw
 
-4. Install Kivy
+3. Install Kivy
 	
 	http://kivy.org/#download - Download DMG (Mac), Download EXE (Windows)
 
@@ -38,6 +34,10 @@
 	Drag Kivy.app to the App Folder
 
 	Double click the make-symlinks icon
+
+4. Download RScanBot
+
+	https://github.com/SwedishBotMafia/RScanBot.Gen/archive/master.zip
 
 5.	Running RScanBot:
 
