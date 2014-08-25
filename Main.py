@@ -48,7 +48,9 @@ class RedditUpdateBotV1App(kivyGui.RedditUpdateBotV1App):
 
         settingsObject = self.settings
         settingsObject_open = open(self.pickleFile,'w')
-        settings = pickle.dump(settingsObject,settingsObject_open)
+        print self.pickleFile
+        print "time between runs: ", settings.timeToWait
+        pickle.dump(settingsObject,settingsObject_open)
 
     def startButtonEventHandler(self, instance):
         self.aBot = Bot()
@@ -140,7 +142,24 @@ class Bot(object):
         Constructor
         '''
         self.pickleFile = "settings.obj"
+        #Load settings from pickle file
         self.settings1 = settings.Settings()
+        try:
+            settingsObject = open(self.pickleFile,'r')
+            self.settings1 = pickle.load(settingsObject)
+
+        except pickle.UnpicklingError:
+            pass
+
+        except IOError as e:
+            print e
+            print "Just enter the settings and hit update settings."
+            pass
+
+        except:
+            e = sys.exc_info()
+            print e
+            
         self.emailer1 = emailer.Email()
         self.db_filename = None
         self.username = self.settings1.username
@@ -164,6 +183,7 @@ class Bot(object):
         self.login = self.settings1.login
         self.to_addr_list = self.settings1.to_addr_list
         self.count = 0
+        print self.settings1.timeToWait
         
     def getTime(self):
         nowTime = str(datetime.now())
