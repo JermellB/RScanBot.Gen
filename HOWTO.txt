@@ -1,5 +1,8 @@
 ~~~ Visual Guide Can be found @ imgur.com/a/Uwszx#0 ~~~
 
+Download RScanBot
+
+	https://github.com/SwedishBotMafia/RScanBot.Gen/archive/master.zip
 
 1. Install pip
 	
@@ -35,9 +38,6 @@
 
 	Double click the make-symlinks icon
 
-4. Download RScanBot
-
-	https://github.com/SwedishBotMafia/RScanBot.Gen/archive/master.zip
 
 5.	Running RScanBot:
 
