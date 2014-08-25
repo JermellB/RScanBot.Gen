@@ -1,8 +1,17 @@
 
 
-1a. Download RBot into your local folder
+1. Download RScanBot
 
-1b. Install Praw
+	https://github.com/SwedishBotMafia/RScanBot.Gen/archive/master.zip
+
+
+2. Install pip
+	
+	from your command line/Terminal do the command:
+
+		sudo easy_install pip
+
+3. Install Praw
 
 	Next you'll have to use pip to install praw (the python wrapper for the reddit API)
 
@@ -12,19 +21,101 @@
 	on windows:
 	http://pip.readthedocs.org/en/latest/installing.html
 
-	from your command line do the command:
+	from your command line/Terminal do the command:
 		
-		pip install praw
+		sudo pip install praw
 
-
-
-2. Configure settings:
+4. Install Kivy
 	
-	Fill in GUI fields as indicated in setup pictures
+	http://kivy.org/#download - Download DMG (Mac), Download EXE (Windows)
 
+	open DMG
+	ctrl-click -> open (Mac)
+	double-click (Win)
 
+	(Macos) Ctrl-Click then select open, (Win) Double click.
 
-3. Now to Run the bot.
+	Drag Kivy.app to the App Folder
+
+	Double click the make-symlinks icon
+
+5.	Running RScanBot:
+
+	open RScanBot.Gen - master (it should be in your downloads folder if you haven't moved it.)
+
+	double click run icon
+
+6. Configure settings:
 	
-		#to be continued.
+	Fill in GUI fields.
+
+	Under Reddit Credentials:
+
+		"Enter your username and password".
+
+			e.g.,
+
+			swedishbotmafia
+			*************
+
+	Under Email Credentials:
+
+		I used Gmail for this although it is possible to use other email services by altering the SMTP server field (advanced users only).
+
+		"Enter email username and password."
+
+			e.g.,
+
+			swedishbotmafia@gmail.com
+			*************
+
+
+		"To email addresses" have to be separated by commas.
+
+			e.g., 
+
+			swedishbotmafia@gmail.com,youremail@wherever.net,thisemailtoo@yahoo.com
+
+	Under Settings:
+
+		Under "subreddits" enter the subreddits you would like the bot to check separated by commas.
+
+			e.g., 
+
+			all,news,worldnews,politics
+
+		Under "words to track" enter the words you would like to track (remember to add a space after each word or RScanBot will return words containing that string of characters, I believe it's possible to look for hash tags on reddit with this bot as well.)
+
+			e.g., 
+
+			united states ,israel ,united kingdom ,hippies ,hoodies ,sweat pants ,#swedishbotmafia 
+
+		Under "Number of posts to retrieve" enter the number of hot posts to retrieve from each subreddit to check.
+		caveats, the higher this number the slower the first run is. Subsequent runs are faster because the bot remembers what it has already checked. I put the default at 100 but you can change this to whatever you wish.
+
+			e.g,
+
+			20
+
+		Under "Minutes to wait betweeen runs" enter the number of minutes to wait between runs. I find 30 minutes to be nice but this can be adjusted at will.
+
+			e.g,
+
+			90
+
+	Press "Update Settings" when done.
+
+	(tip: if you update settings after you have started the bot you will have to press stop bot and restart the bot program for your settings to take effect)
+
+7. Start the Bot:
+	
+	press "Start Bot"
+
+8. Watch bot progress:
+
+	There should be a terminal window on your screen that will show the bot as it is running. If you close this window the bot wil stop/exit so minimize. Bot will also stop/exit if you hit stop bot, or close the bot gui screen so also minimize this if you don't wish to see it.
+ 
+	
+
+	
 	
