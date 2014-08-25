@@ -32,18 +32,36 @@ Download RScanBot
 	ctrl-click -> open (Mac)
 	double-click (Win)
 
-	(Macos) Ctrl-Click then select open, (Win) Double click.
+	(Macos) Ctrl-Click then select open
 
 	Drag Kivy.app to the App Folder
 
 	Double click the make-symlinks icon
-
+	
+	
+	Windows Users Follow this guide for kivy install and how to run RScanBot:
+	
+		http://kivy.org/docs/installation/installation-windows.html
 
 5.	Running RScanBot:
 
-	open RScanBot.Gen - master (it should be in your downloads folder if you haven't moved it.)
-
-	double click run icon
+	open RScanBot.Gen - master (it should be in your downloads folder if you haven't moved it.) (MacOs)
+	
+	
+	option A
+	double click run icon or ctrl-click run (macOs)
+	
+	option B
+	drag Main.py onto The Kivy icon (macOs)
+	
+	option C
+	ctrl-click (macos) run -> with other application then click kivy
+	
+	
+	right click run with kivy-whatever-version-here.bat (windows)
+	
+	
+	
 
 6. Configure settings:
 	
