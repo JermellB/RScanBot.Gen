@@ -1,2 +1,4 @@
 #!/bin/sh
+DIR="$( cd "$(dir name "${BASH_SOURCE[0]}" )" && pwd )"
+cd $DIR
 exec kivy Main.py
