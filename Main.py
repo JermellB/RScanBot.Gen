@@ -63,6 +63,7 @@ class RedditUpdateBotV1App(kivyGui.RedditUpdateBotV1App):
         self.aBot.login = self.settings.login
         self.aBot.emailPassword = self.settings.emailPassword
         self.aBot.to_addr_list = self.settings.to_addr_list
+        self.aBot.smtpserver = self.settings.smtpserver
         
         #Todo: Bot objects class and, add process to a list that will hold new bot Objects. 
         self.botThread = threading.Thread(name="botThread",target=self.aBot.main)
@@ -182,6 +183,7 @@ class Bot(object):
         self.emailPassword = self.settings1.emailPassword
         self.login = self.settings1.login
         self.to_addr_list = self.settings1.to_addr_list
+        self.smtpserver = self.settings1.smtpserver
         self.count = 0
         print self.settings1.timeToWait
         
@@ -514,9 +516,10 @@ class Bot(object):
             print "Nothing new not sending an email \n"
         else:
             print "sending email:\n"
-
+            print self.smtpserver
+            
             self.emailer1.sendEmail(from_addr=self.settings1.from_addr, to_addr_list=self.to_addr_list, cc_addr_list=[],subject="Word Report for:%s" % str(datetime.now()), 
-                message=self.emailText, login=self.login, password=self.emailPassword, smtpserver='smtp.gmail.com:587')
+                message=self.emailText, login=self.login, password=self.emailPassword, smtpserver=self.smtpserver)
             #Set all posts that have been emailed to emailed = 1
             print "updating the words and urls that have been emailed..."
             self.setEmailedtoTrue()
