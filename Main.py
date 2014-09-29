@@ -96,6 +96,7 @@ class RedditUpdateBotV1App(kivyGui.RedditUpdateBotV1App):
             print e
 
         finally:
+            #maybe do a paired something or other for these settings... Too much code here.
             print self.settings.wordList
             self.rUsernameInput.text = self.settings.username
             self.rPasswordInput.text = self.settings.password
@@ -597,5 +598,3 @@ if __name__ == '__main__':
     app = RedditUpdateBotV1App()
     app.setOrientation(orient="vertical")
     app.run()
-
-#todo: Check to see if I'm resetting submissionId List when I reload the pickle after updating settings
