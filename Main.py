@@ -552,6 +552,8 @@ class Bot(object):
                     break
 
                 else:
+                    #possibly running this for as many haven't been emailed 
+                    #where this query will run over and over for the length of the list returned regardless of switching them all ont he first iteration.
                     self.c.execute('UPDATE wordsTable SET emailed = 1 WHERE emailed = 0')
 
     def resetSubmissionIdList(self):
