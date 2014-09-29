@@ -22,6 +22,10 @@ class RedditUpdateBotV1App(App):
 		pass
 
 	def build(self):
+		#todo: Put layout stuff in a dictionary and generate layouts from the dictionary
+		#todo: methods to add/delete gui elements from dictionary.
+		
+		#future: dyanamically update gui, unload/reload of the layout.
 
 		layout = BoxLayout(orientation="horizontal")
 		layoutL = BoxLayout(padding = [20,10], orientation=self.orient, size_hint_x = 50)
