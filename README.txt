@@ -1,5 +1,6 @@
 RScanBot.Gen
 ============
+This code is bad and I should feel bad....
 
 Reddit comment scanning bot derived from Bot.Gen
 
